@@ -9,6 +9,6 @@ feature "tagging links" do
 
     click_button("add")
     link = Link.first
-    expect(link.tags.map(&:tag)).to include('social media')
+    expect(link.tags.map(&:name)).to include('social media')
   end
 end
