@@ -1,18 +1,13 @@
-feature "view links with a specific tag" do
+feature "view links with a specific tag", focus:true do
+    before do
+    Link.create(url: "www.myspace.com", title: "myspace", tags: [Tag.first_or_create(name: "social media")])
+    Link.create(url: "www.bubblesrus.com", title: "bubblesrus", tags: [Tag.first_or_create(name: "bubbles")])
+  end
   scenario "I can view links with the tag 'bubbles'" do
-    visit('/links/add')
-    fill_in(:url, with: "www.myspace.com")
-    fill_in(:title, with: "myspace")
-    fill_in(:tag, with: "social")
-    click_button("add")
-    visit('/links/add')
-    fill_in(:url, with: "www.bubblesrus")
-    fill_in(:title, with: "bubbles for days")
-    fill_in(:tag, with: "bubbles")
-    click_button("add")
     visit('/tags/bubbles')
-    expect(page).to have_content("bubbles")
-    expect(page).to have_content("bubblesrus")
-    expect(page).not_to have_content("social")
+    within 'ul#tags' do
+      expect(page).to have_content("bubblesrus")
+      expect(page).not_to have_content("myspace")
+    end
   end
 end
