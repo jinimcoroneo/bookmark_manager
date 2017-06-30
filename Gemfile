@@ -9,7 +9,8 @@ gem 'dm-transactions'
 gem 'sinatra'
 gem 'database_cleaner'
 gem 'rake'
-gem 'json', "1.8.6"
+gem 'json'
+gem 'bcrypt'
 
 group :test do
   gem 'capybara'
