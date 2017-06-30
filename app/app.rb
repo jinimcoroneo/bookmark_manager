@@ -5,15 +5,12 @@ require './app/init'
 
 class BookmarkManager < Sinatra::Base
   enable :sessions
+  set :session_secret, 'super secret'
+  
   
   get '/links' do
     @links = Link.all
     @users = User.all
-    p "@user #{@users}"
-    p "session[:email] #{session[:email]}"
-    @email = session[:email]
-    p "@email #{@email}"
-    
     erb :links
   end
   
@@ -41,9 +38,15 @@ class BookmarkManager < Sinatra::Base
   end
   
   post '/signup' do
-    user = User.create(email: params[:email], password_digest: params[:password])
+    user = User.create(email: params[:email], password: params[:password])
     session[:email] = user.email
     redirect '/links'
+  end
+  
+  helpers do
+    def current_user
+      @current_user = User.first(email: session[:email])
+    end
   end
   
   run! if app_file == $PROGRAM_NAME

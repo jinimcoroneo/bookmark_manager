@@ -5,7 +5,9 @@
   <title>Links</title>
 </head>
 <body>
-  <h2>Welcome, <%= @email %> </h2>
+  <% if current_user %>
+  <h2>Welcome, <%= current_user.email %> </h2>
+  <% end %>
   <div class="">
     <ul>
       <% @links.each do |link| %>
